@@ -12,3 +12,11 @@ GET http://localhost:3000/users/1
 
 ### Get all users with a given email
 GET http://localhost:3000/users?email=aranabdi@yahoo.com
+
+### Update a user with a given id and optional properties
+PATCH http://localhost:3000/users/1
+Content-Type: application/json
+
+{
+    "password": "5buf14"
+}
