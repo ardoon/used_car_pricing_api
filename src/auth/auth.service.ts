@@ -44,6 +44,10 @@ export class AuthService {
 
     }
 
+    whoAmI(id: number) {
+        return this.usersService.findOne(id);    
+    }
+
     private async isEmailDuplicated(email: string) {
         const users = await this.usersService.find(email);
         if(users.length) {
