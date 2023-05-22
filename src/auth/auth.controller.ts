@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Post, Session } from '@nestjs/common';
+import { Body, Controller, Get, Post, Session, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AuthDto } from './dtos/auth.dto';
 import { Serialize } from 'src/interceptors/serialize.interceptor';
 import { UserDto } from 'src/users/dtos/user.dto';
 import { CurrentUser } from './decorators/current-user.decorator';
 import { User } from 'src/users/user.entity';
+import { AuthGuard } from 'src/guards/auth.guard';
 
 @Controller('auth')
 @Serialize(UserDto)
@@ -26,6 +27,7 @@ export class AuthController {
         return user;
     }
 
+    @UseGuards(AuthGuard)
     @Get('/whoami')
     whoAmI(@CurrentUser() user: User) {
         return user;
