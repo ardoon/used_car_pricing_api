@@ -24,7 +24,23 @@ export class AuthService {
 
     }
 
-    signin() {
+    async signin(email: string, password: string) {
+        
+        const [user] = await this.usersService.find(email);
+
+        if(!user) {
+            throw new BadRequestException("User not exists!")
+        }
+
+        const [salt, storedHash] = user.password.split('.')
+
+        const passwordHash = await this.HashingPassword(password, salt, false);
+
+        if (storedHash !== passwordHash) {
+            throw new BadRequestException("Invalid password!");
+        }
+
+        return user;
 
     }
 
@@ -36,10 +52,18 @@ export class AuthService {
         return false;
     }
 
-    private async HashingPassword(password: string) {
-        const salt = randomBytes(8).toString('hex');
+    private async HashingPassword(password: string, salt?: string, isMixed: boolean = true) {
+        if(!salt) {
+            const salt = randomBytes(8).toString('hex');
+        }
+
         const hash = (await scrypt(password, salt, 32)) as Buffer;
-        return salt + '.' + hash.toString('hex');
+        
+        if(isMixed) {
+            return salt + '.' + hash.toString('hex');
+        }
+
+        return hash.toString('hex');
     }
 
 }

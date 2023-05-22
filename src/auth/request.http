@@ -6,3 +6,12 @@ Content-Type: application/json
     "email": "shakarhabibi@gmail.com",
     "password": "12345678"
 }
+
+### Sign in a user
+POST http://localhost:3000/auth/signin
+Content-Type: application/json
+
+{
+    "email": "shakarhabibio@gmail.com",
+    "password": "12345678"
+}
