@@ -1,0 +1,2 @@
+### Project's root route for Hello message
+GET http://localhost:3000/
