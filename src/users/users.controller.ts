@@ -23,12 +23,14 @@ export class UsersController {
         return this.usersService.find(email);
     }
 
-    @Delete()
-    removeUser() {}
+    @Delete('/:id')
+    removeUser(@Param('id') id: number) {
+        return this.usersService.remove(id);
+    }
 
     @Patch('/:id')
     updateUser(@Param('id') id: number, @Body() body: UpdateUserDto) {
-        return this.usersService.update(id, body)
+        return this.usersService.update(id, body);
     }
 
 }
